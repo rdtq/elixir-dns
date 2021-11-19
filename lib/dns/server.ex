@@ -30,7 +30,7 @@ defmodule DNS.Server do
 
       def handle_info({:udp, client, ip, wtv, data}, state) do
         record = DNS.Record.decode(data)
-        response = handle(record, client)
+        response = handle(record, ip, client)
         Socket.Datagram.send!(state.socket, DNS.Record.encode(response), {ip, wtv})
         {:noreply, state}
       end
